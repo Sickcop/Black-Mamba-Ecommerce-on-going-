@@ -1,7 +1,7 @@
 export const configDb = {
-  host: process.env.HOST,
-  user: process.env.ROOT,
+  host: 'localhost',
+  user: 'root',
   port: 3306,
-  password: 'JmHurtadoIs12',
+  password: 'JmHurtadoIs12*',
   database: 'mercado_libre'
 }
