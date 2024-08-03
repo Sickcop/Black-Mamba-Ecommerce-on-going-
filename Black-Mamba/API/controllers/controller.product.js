@@ -1,5 +1,5 @@
 import { ProductModel } from "../models/model.product.js";
-//import { validateProduct, validatePartialProduct } from "../schemes/scheme.js";
+import { validateProduct, validatePartialProduct } from "../schemes/scheme.js";
 
 export class ProductController {
   static async getAll (req, res) {
@@ -17,7 +17,7 @@ export class ProductController {
   }
 
   static async create (req, res) {
-    const body = req.body
+    const body = validatePartialProduct(req.body)
 
     console.log(body)
 
@@ -25,7 +25,7 @@ export class ProductController {
     //   return res.status(400).json({ error: JSON.parse(body.error.message) })
     // }
 
-    const newProduct = await ProductModel.create({input: body})
+    const newProduct = await ProductModel.create({input: body.data})
 
     res.status(201).json(newProduct)
   }

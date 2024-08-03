@@ -58,7 +58,7 @@ export class ProductModel {
     } = input
 
     try {
-      await connection.query('insert into products (name, description, price, stock, img_url) values (?, ?, ?, ?, ?)', [name,description, price, stock, img_url])
+      await connection.query('insert into products (name, description, price, stock, img_url) values (?, ?, ?, ?, ?)', [name, description, price, stock, img_url])
       return console.log('product created')
     } catch (error) { console.error('Error creating product:', error)
       return { message: 'not found'} }
