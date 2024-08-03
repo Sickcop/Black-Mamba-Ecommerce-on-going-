@@ -42,4 +42,25 @@ export class ProductModel {
       return { message: 'not found'}
     }
   } 
+
+  static async create ({ input }) {
+
+    // if (!input) {
+    //   throw new Error('Input object is required');
+    // }
+
+    const {
+      name,
+      description,
+      price,
+      stock,
+      img_url
+    } = input
+
+    try {
+      await connection.query('insert into products (name, description, price, stock, img_url) values (?, ?, ?, ?, ?)', [name, description, price, stock, img_url])
+      return console.log('product created')
+    } catch (error) { console.error('Error creating product:', error)
+      return { message: 'not found'} }
+  }
 }
