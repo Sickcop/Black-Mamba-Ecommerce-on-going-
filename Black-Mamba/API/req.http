@@ -1,0 +1,11 @@
+### CREATE PRODUCT
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "name": "Sample Product",
+  "description": "This is a description of the sample product.",
+  "price": 199,
+  "stock": 150,
+  "image_url": "https://smselectronic.com/wp-content/uploads/2023/05/SM-S918B_Black_01.jpg"
+}
