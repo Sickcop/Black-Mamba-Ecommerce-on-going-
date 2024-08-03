@@ -6,7 +6,7 @@ const productSchema = z.object({
   description: z.string(),
   price: number().int(),
   stock: z.number().int().positive(),
-  img_url: z.string().url({
+  image_url: z.string().url({
     message: 'img must be a vlaid URL'
   })
 })
