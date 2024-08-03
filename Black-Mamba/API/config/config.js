@@ -1,13 +1,13 @@
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ path : '../.env' })
 
 export const configDb = {
   host: process.env.HOST,
   user:  process.env.USER,
-  port: 3306,
-  password: 'JmHurtadoIs12*',
-  database: 'mercado_libre'
+  port: process.env.PORTDB,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
 }
 
 console.log(configDb)

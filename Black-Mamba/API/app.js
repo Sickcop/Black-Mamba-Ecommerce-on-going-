@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000
 
 app.get('/', (req, res) => res.json({ message: 'working'}))
 
-app.use('/ping', router)
+app.use('/products', router)
 
 app.listen(PORT, () => {
   console.log(`Working on http://localhost:${PORT}`)
