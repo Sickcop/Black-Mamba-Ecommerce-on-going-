@@ -56,4 +56,19 @@ export class ProductModel {
       throw error;
     }
   }
+
+  static async updateProduct ({ id, input }) {
+    const keys = Object.keys(input)
+    const values = Object.values(input)
+
+    const setClause = keys.map(key => `${key} = ?`).join(', ')
+
+    try {
+      await connection.query(`UPDATE products SET ${setClause} where product_id = ?`, [...values, id])
+      return { id, ...input }
+    } catch (error) {
+      console.error('Error updating product: ', error)
+      throw error
+    }
+  }
 }

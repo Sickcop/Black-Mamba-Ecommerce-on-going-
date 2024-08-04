@@ -16,26 +16,38 @@ export class ProductController {
   }
 
   static async create(req, res) {
-    const result = validateProduct({
-      "name": "Sample Product",
-      "description": "This is a description of the sample product.",
-      "price": 199, 
-      "stock": 150,
-      "image_url": "https://smselectronic.com/wp-content/uploads/2023/05/SM-S918B_Black_01.jpg"
-    });
-
-    console.log(result)
-    console.log(result.data)
+    const result = validateProduct( req.body );
 
     if (!result.success) {
-      return res.status(400).json({ errors: result.error.errors });
+      return res.status(400).json({ errors: result.error.errors })
     }
 
     try {
       const newProduct = await ProductModel.create(result.data);
-      res.status(201).json(newProduct);
+      res.status(201).json(newProduct)
     } catch (error) {
-      console.error('Error creating product:', error);
+      console.error('Error creating product:', error)
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  static async updateProduct (req, res) {
+    const { id } = req.params
+
+    console.log(id)
+    console.log(req.body)
+
+    const result = validatePartialProduct(req.body)
+
+    if (!result.success) {
+      return res.status(400).json({ errors: result.error.errors })
+    }
+
+    try {
+      const newPartialProduct = await ProductModel.updateProduct({ id, input: result.data });
+      res.status(201).json(newPartialProduct)
+    } catch (error) {
+      console.error('Error creating product:', error)
       res.status(500).json({ message: 'Internal server error' });
     }
   }
