@@ -12,6 +12,8 @@ app.use('/products', router)
 
 app.use('/home', homeRoutes)
 
+app.use('/users', userRoutes);
+
 app.listen(PORT, () => {
   console.log(`Working on http://localhost:${PORT}`)
 })

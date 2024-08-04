@@ -36,6 +36,31 @@ export class  UserController{
             }
         }
 
+        static async update(req, res){
+            const { id } = req.params;
+            const body = validateUser(req.body);
+
+            if(body.error){
+                return res.status(400).json({ error: JSON.parse(body.error.message) })
+            }
+
+            try{
+                await UserModel.update(id, body.data);
+                res.status(200).json({ message: 'User update' });
+            } catch (error){
+                res.status(500).json({ error: 'Error updating user' })
+            }
+        }
+
+        static async delete(req, res){
+            const { id } = req.params;
+            try {
+                await UserModel.delete(id);
+                res.status(200).json({ message: 'User delleted' });
+            } catch (error){
+                res.status(500).json({ error: 'Error deleting user' })
+            }
+        }
 
 
 }
