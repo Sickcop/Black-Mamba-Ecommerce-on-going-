@@ -71,4 +71,13 @@ export class ProductModel {
       throw error
     }
   }
+
+  static async deleteProduct ({ id }) {
+    try {
+      const [rowDeleted] = await connection.query('DELETE FROM products WHERE product_id = ?;', [id])
+      return rowDeleted
+    } catch (error) {
+      console.Error('Error deleting product: ', error)
+    }
+  }
 }

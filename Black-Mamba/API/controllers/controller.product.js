@@ -3,8 +3,12 @@ import { validateProduct, validatePartialProduct } from "../schemes/scheme.js";
 
 export class ProductController {
   static async getAll(req, res) {
-    const products = await ProductModel.getAll();
-    res.json(products);
+    try {
+      const products = await ProductModel.getAll();
+      res.json(products)
+    } catch (err) {
+      console.error('Error getting data: ', err)
+    }
   }
 
   static async getById(req, res) {
@@ -34,9 +38,6 @@ export class ProductController {
   static async updateProduct (req, res) {
     const { id } = req.params
 
-    console.log(id)
-    console.log(req.body)
-
     const result = validatePartialProduct(req.body)
 
     if (!result.success) {
@@ -49,6 +50,16 @@ export class ProductController {
     } catch (error) {
       console.error('Error creating product:', error)
       res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  static async deleteProduct (req, res) {
+    const { id } = req.params
+    try {
+      const products = await ProductModel.deleteProduct({ id });
+      res.json(products)
+    } catch (err) {
+      console.error('Error getting data: ', err)
     }
   }
 }
