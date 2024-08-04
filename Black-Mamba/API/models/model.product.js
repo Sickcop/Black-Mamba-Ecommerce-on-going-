@@ -43,24 +43,32 @@ export class ProductModel {
     }
   } 
 
-  static async create ({ input }) {
+  static async create({ name, description, price, stock, image_url }) {
+    try {
+      const [result] = await connection.query(
+        'INSERT INTO products (name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?)',
+        [name, description, price, stock, image_url]
+      );
 
-    // if (!input) {
-    //   throw new Error('Input object is required');
-    // }
+      return { id: result.insertId, name, description, price, stock, image_url };
+    } catch (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+  }
 
-    const {
-      name,
-      description,
-      price,
-      stock,
-      img_url
-    } = input
+  static async updateProduct ({ id, input }) {
+    const keys = Object.keys(input)
+    const values = Object.values(input)
+
+    const setClause = keys.map(key => `${key} = ?`).join(', ')
 
     try {
-      await connection.query('insert into products (name, description, price, stock, img_url) values (?, ?, ?, ?, ?)', [name, description, price, stock, img_url])
-      return console.log('product created')
-    } catch (error) { console.error('Error creating product:', error)
-      return { message: 'not found'} }
+      await connection.query(`UPDATE products SET ${setClause} where product_id = ?`, [...values, id])
+      return { id, ...input }
+    } catch (error) {
+      console.error('Error updating product: ', error)
+      throw error
+    }
   }
 }
