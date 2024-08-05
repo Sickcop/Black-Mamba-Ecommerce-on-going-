@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { configDb } from '../config/config';
+import { configDb } from '../config/config.js';
 
 let connection;
 
