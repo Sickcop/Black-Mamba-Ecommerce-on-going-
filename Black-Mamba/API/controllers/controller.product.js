@@ -5,9 +5,10 @@ export class ProductController {
   static async getAll(req, res) {
     try {
       const products = await ProductModel.getAll();
-      res.json(products)
+      res.json(products);
     } catch (err) {
-      console.error('Error getting data: ', err)
+      console.error('Error getting data: ', err);
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
 
@@ -20,46 +21,47 @@ export class ProductController {
   }
 
   static async create(req, res) {
-    const result = validateProduct( req.body );
+    const result = validateProduct(req.body);
 
     if (!result.success) {
-      return res.status(400).json({ errors: result.error.errors })
+      return res.status(400).json({ errors: result.error.errors });
     }
 
     try {
       const newProduct = await ProductModel.create(result.data);
-      res.status(201).json(newProduct)
+      res.status(201).json(newProduct);
     } catch (error) {
-      console.error('Error creating product:', error)
+      console.error('Error creating product:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   }
 
-  static async updateProduct (req, res) {
-    const { id } = req.params
+  static async updateProduct(req, res) {
+    const { id } = req.params;
 
-    const result = validatePartialProduct(req.body)
+    const result = validatePartialProduct(req.body);
 
     if (!result.success) {
-      return res.status(400).json({ errors: result.error.errors })
+      return res.status(400).json({ errors: result.error.errors });
     }
 
     try {
       const newPartialProduct = await ProductModel.updateProduct({ id, input: result.data });
-      res.status(201).json(newPartialProduct)
+      res.status(201).json(newPartialProduct);
     } catch (error) {
-      console.error('Error creating product:', error)
+      console.error('Error creating product:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   }
 
-  static async deleteProduct (req, res) {
-    const { id } = req.params
+  static async deleteProduct(req, res) {
+    const { id } = req.params;
     try {
       const products = await ProductModel.deleteProduct({ id });
-      res.json(products)
+      res.json(products);
     } catch (err) {
-      console.error('Error getting data: ', err)
+      console.error('Error getting data: ', err);
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
 }
