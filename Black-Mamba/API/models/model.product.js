@@ -1,7 +1,7 @@
-import mysql from 'mysql2/promise'
-import { configDb } from '../config/config.js'
+import mysql from 'mysql2/promise';
+import { configDb } from '../config/config.js';
 
-let connection
+let connection;
 
 async function initDbConnection() {
   if (!configDb) {
@@ -30,16 +30,14 @@ export class ProductModel {
     }
   }
 
-  static async getById ({ id }) {
+  static async getById({ id }) {
     try {
-      const [rows] = await connection.query('SELECT * FROM products WHERE product_id = ?', [id])
-      
-      if(rows.length === 0)  throw new Error('Product not found M')
-      return rows[0]
-
-    } catch (error) { 
-      console.error('Error fetching product:', error)
-      return { message: 'not found'}
+      const [rows] = await connection.query('SELECT * FROM products WHERE product_id = ?', [id]);
+      if (rows.length === 0) throw new Error('Product not found');
+      return rows[0];
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      return { message: 'not found' };
     }
   } 
 
@@ -49,7 +47,6 @@ export class ProductModel {
         'INSERT INTO products (name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?)',
         [name, description, price, stock, image_url]
       );
-
       return { id: result.insertId, name, description, price, stock, image_url };
     } catch (error) {
       console.error('Error creating product:', error);
@@ -57,18 +54,27 @@ export class ProductModel {
     }
   }
 
-  static async updateProduct ({ id, input }) {
-    const keys = Object.keys(input)
-    const values = Object.values(input)
-
-    const setClause = keys.map(key => `${key} = ?`).join(', ')
+  static async updateProduct({ id, input }) {
+    const keys = Object.keys(input);
+    const values = Object.values(input);
+    const setClause = keys.map(key => `${key} = ?`).join(', ');
 
     try {
-      await connection.query(`UPDATE products SET ${setClause} where product_id = ?`, [...values, id])
-      return { id, ...input }
+      await connection.query(`UPDATE products SET ${setClause} WHERE product_id = ?`, [...values, id]);
+      return { id, ...input };
     } catch (error) {
-      console.error('Error updating product: ', error)
-      throw error
+      console.error('Error updating product: ', error);
+      throw error;
+    }
+  }
+
+  static async deleteProduct({ id }) {
+    try {
+      const [rowDeleted] = await connection.query('DELETE FROM products WHERE product_id = ?;', [id]);
+      return rowDeleted;
+    } catch (error) {
+      console.error('Error deleting product: ', error);
+      throw error;
     }
   }
 }
