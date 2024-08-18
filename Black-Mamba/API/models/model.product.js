@@ -37,7 +37,9 @@ export class ProductModel {
       return rows[0];
     } catch (error) {
       console.error('Error fetching product:', error);
+
       return { message: 'not found' };
+
     }
   } 
 
