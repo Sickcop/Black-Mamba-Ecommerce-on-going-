@@ -1,7 +1,7 @@
-import { LoginModel } from "../models/model.login"
-import { validateUser } from '../schemes/scheme.user'
+import { LoginModel } from "../models/model.login.js"
+import { validateUser } from '../schemes/scheme.user.js'
 
-export class productController {
+export class loginController {
   static async searchUser(req, res) {
 
     try {

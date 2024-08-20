@@ -1,21 +1,21 @@
 import express from 'express';
 import { UserController } from '../controllers/userController.js'; // Asegúrate de que el nombre coincida
 
-const router = express.Router();
+const UserRouter = express.Router();
 
 // Ruta para obtener todos los usuarios
-router.get('/', UserController.getAll);
+UserRouter.get('/', UserController.getAll);
 
 // Ruta para obtener un usuario por ID
-router.get('/:id', UserController.getById);
+UserRouter.get('/:id', UserController.getById);
 
 // Ruta para crear un nuevo usuario
-router.post('/', UserController.create);
+UserRouter.post('/', UserController.create);
 
 // Ruta para actualizar un usuario por ID
-router.put('/:id', UserController.update);
+UserRouter.put('/:id', UserController.update);
 
 // Ruta para eliminar un usuario por ID
-router.delete('/:id', UserController.delete);
+UserRouter.delete('/:id', UserController.delete);
 
-export default router;
+export default UserRouter;

@@ -1,8 +1,8 @@
 import express from 'express'
-import { loginController } from '../controllers/controller.login'
+import { loginController } from '../controllers/controller.login.js'
 
-const router = express().router
+const loginRouter = express.Router()
 
-router.get('/login', loginController.searchUser)
+loginRouter.get('/login', loginController.searchUser)
 
 export default loginRouter

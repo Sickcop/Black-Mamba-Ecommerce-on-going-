@@ -1,21 +1,21 @@
 import express from 'express';
-import router from './routes/routes.js';
-import homeRoutes from './routes/homeRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
+import productsRouter from './routes/routes.js';
+import homeRouter from './routes/homeRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import orderRouter from './routes/orderRoutes.js';
 import loginRouter from './routes/routes.login.js'
 
 const app = express();
 const PORT = process.env.PORT || 3307;
-
+app.use(express.json())
 
 app.get('/', (req, res) => res.json({ message: 'working'}));
 
-app.use('/products', router);
-app.use('/home', homeRoutes);
-app.use('/users', userRoutes);
-app.use('/orders', orderRoutes);
-app
+app.use('/products', productsRouter);
+app.use('/home', homeRouter);
+app.use('/users', userRouter);
+app.use('/orders', orderRouter);
+app.use('/login', loginRouter)
 
 app.listen(PORT, () => {
   console.log(`Working on http://localhost:${PORT}`);
