@@ -57,7 +57,7 @@ export class  UserController{
             const { id } = req.params;
             try {
                 await UserModel.delete(id);
-                res.status(200).json({ message: 'User delleted' });
+                res.status(200).json({ message: 'User deleted' });
             } catch (error){
                 res.status(500).json({ error: 'Error deleting user' })
             }
